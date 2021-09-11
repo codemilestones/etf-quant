@@ -8,7 +8,7 @@ def fetch_index(index):
     stock_zh_a_hist_df.to_csv(index + ".csv")
     print(stock_zh_a_hist_df)
 
-index_list = ["sh510500", "sh515700", "sh512010", "sz159928"]
+index_list = ["sh510500", "sh512010", "sz159928"]
 
 for index in index_list:
     fetch_index(index)
