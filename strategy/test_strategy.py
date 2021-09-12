@@ -9,10 +9,10 @@ class TradeStrategy(bt.Strategy):
                         period_me1=self.p.p1, 
                         period_me2=self.p.p2, 
                         period_signal=self.p.p3)
-        bt.ind.MACD(self.data)
-        bt.ind.MACDHisto(self.data)
-        bt.ind.RSI(self.data,period=14)
-        bt.ind.BBands(self.data)
+        # bt.ind.MACD(self.data)
+        # bt.ind.MACDHisto(self.data)
+        # bt.ind.RSI(self.data,period=14)
+        # bt.ind.BBands(self.data)
 
     def next(self):
         if not self.position:

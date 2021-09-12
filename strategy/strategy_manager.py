@@ -3,7 +3,7 @@ import backtrader as bt
 import backtrader.feeds as btfeed
 
 
-def start_strategy(strategy):
+def start_strategy(data, strategy, needPaint):
 # 初始化模型
     cerebro = bt.Cerebro()
 # 设定初始资金
@@ -14,30 +14,22 @@ def start_strategy(strategy):
     cerebro.addsizer(bt.sizers.FixedSize, stake=100)
 
 # 加载数据
-    data = btfeed.GenericCSVData(
-        dataname='../data/sh510500.csv',
-        datetime=0,
-        open=1,
-        high=2,
-        low=3,
-        close=4,
-        volume=5,
-        dtformat=('%Y-%m-%d'),
-        openinterest=1
- #   fromdate=dt.datetime(2013, 3, 15),
- #   todate=dt.datetime(2020, 4, 12)
-)
+
     cerebro.adddata(data)
 
     #加载策略
     cerebro.addstrategy(strategy)
 
 # 策略执行前的资金
+    before = cerebro.broker.getvalue()
     print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
 
     cerebro.run()
 
 # 策略执行后的资金
     print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
+    earned = cerebro.broker.getvalue() - before
+    print('============================================> %.2f' % earned)
 
-    cerebro.plot()
+    if needPaint:
+        cerebro.plot()
