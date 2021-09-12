@@ -1,0 +1,4 @@
+from test_strategy import TradeStrategy
+from strategy_manager import start_strategy
+
+start_strategy(TradeStrategy)
