@@ -4,7 +4,7 @@
 import akshare as ak
 #前复权拉去股票数
 def fetch_index(index):
-    stock_zh_a_hist_df = ak.stock_zh_index_daily(symbol=index)
+    stock_zh_a_hist_df = ak.stock_zh_index_daily_tx(symbol=index)
     stock_zh_a_hist_df.to_csv(index + ".csv", date_format='%Y-%m-%d')
     print(stock_zh_a_hist_df)
 
