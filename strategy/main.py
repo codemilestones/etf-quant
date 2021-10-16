@@ -1,3 +1,4 @@
+from net_strategy import NetTradeStrategy
 from pandas._libs.tslibs import timestamps
 from test_strategy import TradeStrategy
 from strategy_manager import start_strategy
@@ -50,6 +51,8 @@ end_date = [
 ]
 
 def run_test(file, start, end):
+    print("")
+    print(start)
     data = bt.feeds.GenericCSVData(
         dataname=file,
         datetime=0,
@@ -64,7 +67,7 @@ def run_test(file, start, end):
         todate=end
 )
 
-    start_strategy(data, TradeStrategy, False)
+    start_strategy(data, NetTradeStrategy, False)
 
-for i in range(0, 10):
-    run_test(file, start_date[i], end_date[i+6])
+for i in range(0, 12):
+    run_test(file, start_date[i], start_date[i+6])

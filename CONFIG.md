@@ -5,6 +5,9 @@ pip install akshare -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mir
 # VS Code python 路径配置
 shift + cmd + P => python: select Interpreter
 
+akshare 文档
+https://www.akshare.xyz/ 
+
 akshare 使用docker配置
 
 拉取
