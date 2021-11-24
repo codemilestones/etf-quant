@@ -13,9 +13,9 @@ def fetch_index(index):
     stock_df["pcnt"].fillna(0)
     stock_df["pcnt_real_time"] = (stock_high_max - stock_low_min) / stock_df['close'] * 100
     stock_df.to_csv(index + ".csv", date_format='%Y-%m-%d')
-    print(stock_df)
 
 if __name__ == '__main__':
     index_list = ["sh510500", "sh512010", "sz159928"]
     for index in index_list:
+        print('start fetch: ' + index)
         fetch_index(index)
