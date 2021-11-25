@@ -1,3 +1,5 @@
+#coding=UTF-8 
+
 from pandas import Series,DataFrame
 import pandas as pd
 import numpy as np
@@ -11,12 +13,18 @@ df = pd.read_csv('./data/sh510500.csv')
 total = len(df)
 print(total)
 
-bin = np.arange(0,24,0.5)
+bin = np.arange(0,24,0.2)
 cut = pd.cut(df['pcnt_real_time'], bins=bin, labels=bin[:-1], right=False)
 counts = pd.value_counts(cut,sort=False)
 sum_counts = total - counts.cumsum().to_frame()
+ii = list(sum_counts.index)
+sum_counts['index'] = ii
+earn = sum_counts['pcnt_real_time'] * sum_counts['index'] * sum_counts['index']
 
-print(sum_counts)
+earn.columns = ['earn']
+earn.plot()
+
+print(earn)
 
 def jls_extract_def():
     ##绘制直方图
