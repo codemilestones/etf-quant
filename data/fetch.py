@@ -7,12 +7,29 @@ import pandas as pd
 #前复权拉去股票数
 def fetch_index(index):
     stock_df = ak.stock_zh_index_daily_tx(symbol=index)
-    stock_high_max = DataFrame([stock_df['high'].shift(1), stock_df['high']]).T.max(axis=1)
-    stock_low_min = DataFrame([stock_df['low'].shift(1), stock_df['low']]).T.min(axis=1)
     stock_df["pcnt"] = (stock_df["close"] - stock_df["close"].shift(1)) / stock_df['close'] * 100
     stock_df["pcnt"].fillna(0)
-    stock_df["pcnt_real_time"] = (stock_high_max - stock_low_min) / stock_df['close'] * 100
+
+    # 长线指标 1d, 10d, 20d, 60d, 120d, 240d
+    peried = [1,5,10,20,60,120,240]
+    for p in peried:
+        stock_high_max=compute_m_day_max(stock_df, p)
+        stock_low_min=compute_m_day_min(stock_df, p)
+        stock_df['pcnt_'+str(p)+'d'] = (stock_high_max - stock_low_min) / stock_df['close'] * 100
+
     stock_df.to_csv(index + ".csv", date_format='%Y-%m-%d')
+
+def compute_m_day_max(df, day):
+    max_df = df['high']
+    for i in range(1,day+1):
+        max_df = DataFrame([df['high'].shift(i), max_df]).T.max(axis=1)
+    return max_df
+
+def compute_m_day_min(df, day):
+    min_df = df['low']
+    for i in range(1,day+1):
+        min_df = DataFrame([df['low'].shift(i), min_df]).T.min(axis=1)
+    return min_df
 
 if __name__ == '__main__':
     stock = pd.read_csv('stock.csv')
