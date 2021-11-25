@@ -15,7 +15,7 @@ def fetch_index(index):
     stock_df.to_csv(index + ".csv", date_format='%Y-%m-%d')
 
 if __name__ == '__main__':
-    index_list = ["sh510500", "sh512010", "sz159928"]
-    for index in index_list:
+    stock = pd.read_csv('stock.csv')
+    for index in stock['code']:
         print('start fetch: ' + index)
         fetch_index(index)
