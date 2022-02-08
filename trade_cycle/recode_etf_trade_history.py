@@ -38,7 +38,7 @@ def record_trade_history(code):
 
     output_path = '../trade_cycle/cycle_history/' + code + '_'+ name + '_' + start_time + '.csv'
     if os.path.exists(output_path):
-        output_df = pd.read_csv(output_path)
+        output_df = pd.read_csv(output_path, index_col=0)
     else:
         output_df = pd.DataFrame(columns=['date', 'code', 'name', 'start_time', 'start_price', 'start_price_position', 'cost_price', 'total_cash', 'position', 'real_position_rate', 'current_price', 'min_price', 'max_price','current_rate'])
 
@@ -46,7 +46,21 @@ def record_trade_history(code):
     if (len(output_df)>0 and output_df.tail(1).iloc[0].at['date']==date):
         return
     
-    output_df.loc[output_df.index.max() + 1] = [date, code, name, start_time, start_price, start_price_position, cost_price, total_cash, position, real_position_rate, current_price, min_price, max_price, current_rate]
+    output_df = output_df.append([{
+        'date': date, 
+        'code': code,
+        'name': name,
+        'start_time': start_time,
+        'start_price': start_price,
+        'start_price_position': start_price_position,
+        'cost_price': cost_price,
+        'total_cash': total_cash,
+        'position': position,
+        'real_position_rate': real_position_rate,
+        'current_price': current_price,
+        'min_price': min_price,
+        'max_price': max_price,
+        'current_rate': current_rate}], ignore_index = True)
 
     output_df.to_csv(output_path)
 

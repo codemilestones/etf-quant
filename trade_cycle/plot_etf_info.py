@@ -49,15 +49,17 @@ def plot_etf_info(code, axe):
     axe.bar(x, b, fc='darkorange')
     axe.bar(x, a, fc='steelblue')
     
-    bar_num = [round(current_rate, 2), str(round(recommend_position_rate, 2))+'%', str(round(real_position_rate, 2))+'%', str(round(loss_rate, 2)) + '%']
+    bar_num = [str(round(current_rate, 2))+'%', str(round(recommend_position_rate, 2))+'%', str(round(real_position_rate, 2))+'%', str(round(loss_rate, 2)) + '%']
     for xx, yy in zip(x,a):
         axe.text(xx, yy, str(bar_num[xx]), ha='center')
+        if (xx == 0):
+            axe.text(xx, yy-3, current_price, ha='center')
     
-    top = [max_price, '100%', '100%', '15%']
+    top = [min_price, '100%', '100%', '15%']
     for xx, yy in zip(x,b):
         axe.text(xx, yy+3, str(top[xx]), ha='center')
 
-    bottom = [min_price, '0%', '0%', '0%']
+    bottom = [max_price, '0%', '0%', '0%']
     for xx, yy in zip(x,b):
         axe.text(xx, -5, str(bottom[xx]), ha='center')
     
