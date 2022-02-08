@@ -1,4 +1,4 @@
-,code,name, start_time, start_price_position, total_cash, cost_price, position
+,code,name,start_time,start_price_position,total_cash,cost_price,position
 0,sh510500,500ETF,2021-10-26,,10000,7.859,900
 1,sh515700,新能车,2021-11-26,,10000,3.086,2100
 2,sz159928,消费,2021-09-07,,40000,1.073,11300
