@@ -10,6 +10,7 @@ import math
 def plot_etf_info(code):
     plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
     plt.rcParams['axes.unicode_minus'] = False
+    plt.figure(figsize=(8,4))
 
     path = "./data/" + code + ".csv"
     data_df = pd.read_csv(path)
@@ -25,6 +26,7 @@ def plot_etf_info(code):
 
     user_df = pd.read_csv('./trade_cycle/current_trade.csv')
     select_code_data = user_df[user_df['code'] == code]
+    name = select_code_data.iloc[0].at['name']
     cost_price = select_code_data.iloc[0].at['cost_price']
     total_cash = select_code_data.iloc[0].at['total_cash']
     position = select_code_data.iloc[0].at['position']
@@ -40,13 +42,17 @@ def plot_etf_info(code):
     a[1] = recommend_position_rate
     a[2] = real_position_rate
     a[3] = loss_rate / 15 * 100
+    if (a[3] < 0):
+        a[3] = 0
+    if (a[3] > 100):
+        a[3] = 100
     
     plt.bar(x, b, fc='darkorange')
     plt.bar(x, a, fc='steelblue')
     
     bar_num = [round(current_rate, 2), str(round(recommend_position_rate, 2))+'%', str(round(real_position_rate, 2))+'%', str(round(loss_rate, 2)) + '%']
     for xx, yy in zip(x,a):
-        plt.text(xx, yy-0.1, str(bar_num[xx]), ha='center')
+        plt.text(xx, yy, str(bar_num[xx]), ha='center')
     
     top = [max_price, '100%', '100%', '15%']
     for xx, yy in zip(x,b):
@@ -58,11 +64,15 @@ def plot_etf_info(code):
     
     label = ['价格', '建议仓位', '实际仓位', '建仓亏损']
     for xx, yy in zip(x,b):
-        plt.text(xx, -15, label[xx], ha='center')
+        plt.text(xx, -10, label[xx], ha='center')
+
+    for xx, yy in zip(x,b):
+        plt.text(xx, -15, '', ha='center')
     
     plt.legend()
     plt.axis('off')
-    
+
+    plt.title(date + ' ' + code + ' ' + name, y=1.02)
     plt.show()
 
 
