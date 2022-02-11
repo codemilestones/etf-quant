@@ -40,7 +40,7 @@ def record_trade_history(code):
     if os.path.exists(output_path):
         output_df = pd.read_csv(output_path, index_col=0)
     else:
-        output_df = pd.DataFrame(columns=['date', 'code', 'name', 'start_time', 'start_price', 'start_price_position', 'cost_price', 'total_cash', 'position', 'real_position_rate', 'current_price', 'min_price', 'max_price','current_rate'])
+        output_df = pd.DataFrame(columns=['date', 'code', 'name', 'start_time', 'start_price', 'start_price_position', 'cost_price', 'total_cash', 'position', 'real_position_rate', 'current_price', 'min_price', 'max_price','current_rate', 'loss_rate'])
 
     # 如果本日数据已更新，不追加数据
     if (len(output_df)>0 and output_df.tail(1).iloc[0].at['date']==date):
@@ -60,7 +60,8 @@ def record_trade_history(code):
         'current_price': current_price,
         'min_price': min_price,
         'max_price': max_price,
-        'current_rate': current_rate}], ignore_index = True)
+        'current_rate': current_rate,
+        'loss_rate': loss_rate}], ignore_index = True)
 
     output_df.to_csv(output_path)
 
