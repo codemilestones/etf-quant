@@ -91,6 +91,7 @@ def plot_etf_info_simple(code, name, axe):
     date = lastDayData.iloc[0].at['date']
     max_price = lastDayData.iloc[0].at['max_price']
     min_price = lastDayData.iloc[0].at['min_price']
+    min_price_500d = lastDayData.iloc[0].at['min_price_500d']
     current_price = lastDayData.iloc[0].at['close']
     current_rate = (1 - (math.log(current_price) - math.log(min_price)) / (math.log(max_price) - math.log(min_price))) * 100
 
@@ -117,8 +118,12 @@ def plot_etf_info_simple(code, name, axe):
         if (xx == 1):
             left_max_loss = round((min_price / current_price - 1) * 100, 2)
             axe.text(xx, yy-3, str(left_max_loss)+'%' , ha='center')
+            left_max_loss_500 = round((min_price_500d / current_price - 1) * 100, 2)
+            axe.text(xx, yy-6, str(left_max_loss_500)+'%' , ha='center')
+
     
-    top = [min_price, '100%']
+    
+    top = [str(min_price) + '/' + str(min_price_500d), '100%']
     for xx, yy in zip(x,b):
         axe.text(xx, yy+3, str(top[xx]), ha='center')
 
