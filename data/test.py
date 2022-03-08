@@ -19,9 +19,8 @@ def compute_m_day_max(df, day):
 
 df = pd.read_csv('./data/sh510500.csv')
 
-dd = df['high'].max()
-dd = np.log(1 + df['high'].shift())
-print(10.1 // 1)
+
+print(compute_m_day_max(df, 2000))
 
 
 

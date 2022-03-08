@@ -21,6 +21,10 @@ def fetch_index(index):
     stock_low_min=compute_m_day_min(stock_df, 250)
     stock_df['max_price'] = stock_high_max
     stock_df['min_price'] = stock_low_min
+    stock_high_max_500=compute_m_day_max(stock_df, 500)
+    stock_low_min_500=compute_m_day_min(stock_df, 500) 
+    stock_df['max_price_500d'] = stock_high_max_500
+    stock_df['min_price_500d'] = stock_low_min_500
 
     stock_df.to_csv(index + ".csv", date_format='%Y-%m-%d')
 
