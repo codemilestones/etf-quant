@@ -1,2 +1,3 @@
 ,date,code,name,start_time,start_price,start_price_position,cost_price,total_cash,position,real_position_rate,current_price,min_price,max_price,current_rate,loss_rate
 0,2022-04-08,sh516950,基建,2022-04-07,1.019,72.18,1.046,10000,4800,50.208,1.075,0.933,1.281,55.30766029537671,-2.7724665391969325
+1,2022-04-13,sh516950,基建,2022-04-07,1.019,72.18,1.046,10000,4800,50.208,1.036,0.933,1.281,66.9652486693093,0.95602294455067
