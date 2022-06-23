@@ -6,7 +6,8 @@ import backtrader as bt
 import pandas as pd
 import datetime
 
-file = '../data/sh510500.csv'
+origin_file = 'data/sh510500.csv'
+temp_file = 'temp.csv'
 
 start_date = [
     datetime.datetime(2013, 1, 1),
@@ -70,4 +71,8 @@ def run_test(file, start, end):
     start_strategy(data, NetTradeStrategy, False)
 
 for i in range(0, 12):
-    run_test(file, start_date[i], start_date[i+6])
+    df = pd.read_csv(origin_file)
+    df=df.drop(columns ='Unnamed: 0')
+    df.to_csv(temp_file, index=False)
+
+    run_test(temp_file, start_date[i], start_date[i+6])
