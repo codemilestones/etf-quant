@@ -68,9 +68,9 @@ def run_test(file, start, end):
         todate=end
 )
 
-    start_strategy(data, NetTradeStrategy, False)
+    start_strategy(data, TradeStrategy, False)
 
-for i in range(0, 12):
+for i in range(10, 12):
     df = pd.read_csv(origin_file)
     df=df.drop(columns ='Unnamed: 0')
     df.to_csv(temp_file, index=False)
