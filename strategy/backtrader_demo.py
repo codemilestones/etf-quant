@@ -22,14 +22,33 @@ class SMAStrategy(bt.Strategy):
             if self.dataclose[0] < self.sma[0]:
                 self.close()
 
-            
+class MyStrategy(bt.Strategy):
+
+    def __init__(self):
+        self.sma = bt.indicators.MovingAverageSimple(self.data0, period=100)        
+        self.buy_signal = bt.indicators.CrossOver(self.data.close, self.sma)
+        self.sell_signal = bt.indicators.CrossDown(self.data.close, self.sma)
+        self.last_sell_data = None
+
+
+    def next(self):
+        if not self.position and self.buy_signal[0] == 1:
+            if not self.last_sell_data or (self.datetime.date(0) - self.last_sell_data).days > 100:
+                self.order = self.buy()
+                self.order = self.sell(exectype=bt.Order.StopTrail, trailpercent=0.1)
+
+
+
+    def notify_order(self, order):
+        if order.ordtype == 1 and order.status == 2:
+            self.last_sell_data = self.datetime.date(0)
 
 if __name__ == "__main__":
     cerebro = bt.Cerebro()
-    data_stock = getDataFromCSV('data/sh510500.csv', dt.datetime(2013,1,1), dt.datetime(2022,1,1))
+    data_stock = getDataFromCSV('data/sh510500.csv', dt.datetime(2015,5,29), dt.datetime(2022,1,1))
     cerebro.adddata(data_stock)
 
-    cerebro.addstrategy(SMAStrategy)
+    cerebro.addstrategy(MyStrategy)
     cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name = 'SharpeRatio')
     cerebro.addanalyzer(bt.analyzers.DrawDown, _name='DrawDown')
 
